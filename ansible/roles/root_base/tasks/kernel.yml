@@ -1,0 +1,42 @@
+- name: kernel > Install different kernel flavours
+  community.general.pacman: name={{ item }}
+  with_items:
+    - linux,linux-headers
+    - linux-lts,linux-lts-headers
+
+- name: kernel > Install kernel firmwares
+  community.general.pacman: name=linux-firmware
+
+- name: kernel > Install bootloader packages
+  community.general.pacman: name=dosfstools,efibootmgr,grub,mtools,os-prober
+
+- name: kernel > Set GRUB timeout
+  ansible.builtin.lineinfile: dest=/etc/default/grub regexp='^GRUB_TIMEOUT=' line='GRUB_TIMEOUT=5'
+  notify: grub-mkconfig
+
+- name: kernel > Set GRUB timeout style
+  ansible.builtin.lineinfile: dest=/etc/default/grub regexp='^GRUB_TIMEOUT_STYLE=' line='GRUB_TIMEOUT_STYLE=menu'
+  notify: grub-mkconfig
+
+- name: kernel > Set GRUB linux command line for both normal and recovery modes
+  ansible.builtin.lineinfile: 
+    dest: /etc/default/grub 
+    regexp: '^GRUB_CMDLINE_LINUX=' 
+    line: 'GRUB_CMDLINE_LINUX="audit=0 loglevel=3 nowatchdog"'
+  notify: grub-mkconfig
+
+- name: kernel > Enable GRUB recovery
+  ansible.builtin.lineinfile: dest=/etc/default/grub regexp='^GRUB_DISABLE_RECOVERY=' line='GRUB_DISABLE_RECOVERY=false'
+  notify: grub-mkconfig
+
+- name: kernel > Disable GRUB submenu
+  ansible.builtin.lineinfile: dest=/etc/default/grub regexp='^GRUB_DISABLE_SUBMENU=' line='GRUB_DISABLE_SUBMENU=true'
+  notify: grub-mkconfig
+
+- name: kernel > Set default GRUB menu entry
+  ansible.builtin.lineinfile: dest=/etc/default/grub regexp='^GRUB_DEFAULT=' line='GRUB_DEFAULT="Arch Linux, with Linux linux-lts"'
+  notify: grub-mkconfig
+
+- name: kernel > Disable GRUB framebuffer (for maximum NVIDIA driver compatibility)
+  ansible.builtin.lineinfile: dest=/etc/default/grub regexp='^GRUB_TERMINAL_OUTPUT=' line='GRUB_TERMINAL_OUTPUT=console'
+  notify: grub-mkconfig

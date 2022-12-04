@@ -1,0 +1,54 @@
+- name: video > Install Wayland
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - wayland
+      - wayland-protocols
+      - wayland-utils
+
+- name: video > Install XWayland
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - xorg-xwayland
+      - xorg-xlsclients
+
+- name: video > Mesa and Vulkan
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - mesa
+      - vulkan-icd-loader
+      - vulkan-tools
+
+- name: video > Install Video Acceleration (VA) packages
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - libva
+      - libva-utils
+
+# Nvidia specific
+- name: video > Install Nvidia driver
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - nvidia-dkms
+      - nvidia-utils
+      - nvidia-settings
+      - nvtop
+
+- name: video > Enable Nvidia KMS only for normal modes (not for recovery)
+  ansible.builtin.lineinfile: 
+    dest: /etc/default/grub 
+    regexp: '^GRUB_CMDLINE_LINUX_DEFAULT=' 
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT="nvidia-drm.modeset=1"'
+  notify: grub-mkconfig
+
+- name: video > Install Video Decode and Presentation API for UNIX (VDPAU) packages
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - libvdpau
+      - libva-vdpau-driver 
+      - vdpauinfo

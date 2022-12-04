@@ -1,0 +1,11 @@
+[Match]
+Name=!lo
+
+[Network]
+DHCP=yes
+MulticastDNS=no
+LLMNR=no
+IPForward=yes
+
+[DHCPv4]
+UseDomains=yes

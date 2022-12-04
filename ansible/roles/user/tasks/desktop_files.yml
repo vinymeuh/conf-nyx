@@ -1,0 +1,19 @@
+# ~/.local/share/applications
+- name: desktop-files > Create ~/.local/share/applications directory
+  ansible.builtin.file: path=~/.local/share/applications state=directory mode=0700
+
+- name: desktop-files > Copy "NoDisplay" desktop files
+  ansible.builtin.copy: src=nodisplay.desktop dest=~/.local/share/applications/{{ item }}.desktop mode=0400
+  loop:
+    - bssh
+    - bvnc
+    - cmake-gui
+    - electron11
+    - electron
+    - gtk-lshw
+    - io.github.quodlibet.ExFalso
+    - vim
+
+- name: desktop-files > Copy custom desktop files
+  ansible.builtin.copy: src={{ item }} dest=~/.local/share/applications mode=0400
+  with_fileglob: 'desktop_files/*.desktop'

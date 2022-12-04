@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+jpegdir=$(pwd)
+nefdir=$(echo ${jpegdir/MesPhotos/MesRAWs} )
+
+echo "NEF DIR : ${nefdir}"
+echo "JPEG DIR: ${jpegdir}"
+
+for f in $(ls .)
+do
+    ext="${f##*.}"
+    [ "${ext}" != "jpg" ] && continue
+    fbase="${f%.*}"
+    if [ -f "${nefdir}/${fbase}.NEF" ]; then
+        echo "${fbase}.NEF -> $f"
+        exiftool -overwrite_original_in_place -tagsfromfile "${nefdir}/${fbase}.NEF" -exif:all -xmp:all "${jpegdir}/${f}"
+    fi
+done

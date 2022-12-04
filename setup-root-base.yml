@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  tasks:
+    - {import_role: name=root_base tasks_from=kernel,  tags: ['kernel']}
+    - {import_role: name=root_base tasks_from=base,    tags: ['base']}
+    - {import_role: name=root_base tasks_from=network, tags: ['network']}
+    - {import_role: name=root_base tasks_from=audio,   tags: ['audio']}
+    - {import_role: name=root_base tasks_from=video,   tags: ['video']}
+    - {import_role: name=root_base tasks_from=printer, tags: ['printer']}
+    - {import_role: name=root_base tasks_from=fonts,   tags: ['fonts']}
+    - {import_role: name=root_base tasks_from=gnome,   tags: ['gnome']}

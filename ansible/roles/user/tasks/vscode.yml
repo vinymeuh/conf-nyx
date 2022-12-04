@@ -1,0 +1,21 @@
+- name: vscode > Retrieves list of currently installed extensions
+  ansible.builtin.command: "{{ code_install_dir }}/bin/code --list-extensions"
+  register: vscode_installed_extensions
+  changed_when: false
+
+- name: vscode > Install missing extensions
+  ansible.builtin.command: "{{ code_install_dir }}/bin/code --install-extension {{ item }}"
+  when: item not in vscode_installed_extensions.stdout_lines
+  with_items:
+    - AugusteRame.zls-vscode
+    - Avetis.tokyo-night
+    - DavidAnson.vscode-markdownlint
+    - golang.go
+    - mhutchie.git-graph
+    - ms-vscode-remote.remote-containers
+    - ms-vscode.cpptools
+    - ms-vscode.cmake-tools
+    - PKief.material-icon-theme
+    - samuelcolvin.jinjahtml
+    - tiehuis.zig
+    - twxs.cmake

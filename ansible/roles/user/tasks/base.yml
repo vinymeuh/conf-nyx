@@ -1,0 +1,36 @@
+# Directory ~/Applications used for:
+#  - PortfolioPerformance
+#  - Qt
+#  - VSCode-linux-x64
+#  - FastPhotoTagger
+- name: base > Create my base directories
+  ansible.builtin.file: path={{ item }} state=directory mode=0700
+  with_items:
+    - ~/Applications
+    - ~/Work4Me
+    - ~/Work@Home
+
+# XDG directories (see https://wiki.archlinux.org/title/XDG_user_directories)
+- block:
+  - name: base > Check XDG_DOCUMENTS_DIR
+    ansible.builtin.command: xdg-user-dir DOCUMENTS
+    register: xdg_documents
+  - name: base > Set XDG_DOCUMENTS_DIR
+    ansible.builtin.command: xdg-user-dirs-update --set DOCUMENTS ~/MesDocuments 
+    when: xdg_documents.stdout != '/home/viny/MesDocuments'
+
+- block:
+  - name: base > Check XDG_PICTURES_DIR
+    ansible.builtin.command: xdg-user-dir PICTURES
+    register: xdg_pictures
+  - name: base > Set XDG_PICTURES_DIR
+    ansible.builtin.command: xdg-user-dirs-update --set PICTURES ~/MesPhotos 
+    when: xdg_pictures.stdout != '/home/viny/MesPhotos'
+
+- block:
+  - name: base > Check XDG_VIDEOS_DIR
+    ansible.builtin.command: xdg-user-dir VIDEOS
+    register: xdg_videos
+  - name: base > Set XDG_VIDEOS_DIR
+    ansible.builtin.command: xdg-user-dirs-update --set VIDEOS ~/MesRAWs
+    when: xdg_videos.stdout != '/home/viny/MesRAWs'

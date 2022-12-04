@@ -1,0 +1,7 @@
+#
+# ~/.bash_profile
+#
+
+export LC_ALL=C
+
+[[ -f ~/.bashrc ]] && . ~/.bashrc

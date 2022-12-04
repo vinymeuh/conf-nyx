@@ -1,0 +1,13 @@
+- name: podman> Install Podman
+  community.general.pacman: name=podman,cni-plugins,podman-docker,containerd
+
+- name: podman> Set subuid & subgid for rootless mode with user viny
+  lineinfile:
+    path: "{{ item }}"
+    state: present
+    line: "viny:100000:65536"
+    create: yes
+  loop:
+    - /etc/subuid
+    - /etc/subgid
+  

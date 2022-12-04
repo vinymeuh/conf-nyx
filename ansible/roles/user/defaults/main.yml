@@ -1,0 +1,62 @@
+code_install_dir: ~/Applications/VSCode-linux-x64
+
+apps_folders:
+  - Finance
+  - GnomeUtilities
+  - KiCad
+  - Photo
+  - Qt
+  - Shogi
+  - Steam
+  - System
+
+folder_finance_apps:
+  - gnucash.desktop
+  - portfolio-performance.desktop
+
+folder_gnomeutilities_apps:
+  - ca.desrt.dconf-editor.desktop
+  - org.gnome.Calculator.desktop
+  - org.gnome.Contacts.desktop
+  - org.gnome.Cheese.desktop
+  - org.gnome.Extensions.desktop
+  - org.gnome.Evince.desktop
+  - org.gnome.Settings.desktop
+  - org.gnome.Software.desktop
+  - org.gnome.Weather.desktop
+  - org.gnome.clocks.desktop
+  - org.gnome.eog.desktop
+  - org.gnome.tweaks.desktop
+
+folder_kicad_apps:
+  - org.kicad.bitmap2component.desktop
+  - org.kicad.eeschema.desktop
+  - org.kicad.gerbview.desktop
+  - org.kicad.kicad.desktop
+  - org.kicad.pcbcalculator.desktop
+  - org.kicad.pcbnew.desktop
+
+folder_qt_apps:
+  - qvidcap.desktop
+  - qv4l2.desktop
+
+folder_shogi_apps:
+  - qshogi.desktop
+
+folder_steam_apps:
+  - steam.desktop
+  - 'Plague Inc Evolved.desktop'
+
+folder_system_apps:
+  - avahi-discover.desktop
+  - cups.desktop
+  - gnome-control-center.desktop
+  - gnome-system-monitor.desktop
+  - java-java-openjdk.desktop
+  - jconsole-java-openjdk.desktop
+  - jshell-java-openjdk.desktop
+  - lstopo.desktop
+  - nvidia-settings.desktop
+  - nvtop
+  - org.gnome.Usage.desktop
+  - timeshift-gtk.desktop

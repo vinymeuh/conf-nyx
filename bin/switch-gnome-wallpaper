@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# 0 * * * * /home/viny/nyx-meushi/bin/switch-gnome-wallpaper
+
+WP_DIR="$HOME/MesDocuments/wallpapers/2560x1440"
+
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+
+OLD_WP=$(gsettings get org.gnome.desktop.background picture-uri)
+NEW_WP="file://$(ls $WP_DIR/* | shuf -n1)"
+while [ "$NEW_WP" == "$OLD_WP" ]; do
+    NEW_WP="file://$(ls $WP_DIR/* | shuf -n1)"
+done
+gsettings set org.gnome.desktop.background picture-uri "$NEW_WP"
+gsettings set org.gnome.desktop.background picture-uri-dark "$NEW_WP"
+gsettings set org.gnome.desktop.screensaver picture-uri "$NEW_WP"

@@ -1,0 +1,147 @@
+# The easiest way to figure out exact syntax/value to provide for a key is by making 
+# the configuration change in application and use
+# - dconf watch /
+# - dconf dump /path/to/dir/"
+# - dconf read /path/to/key
+
+- name: gnome > Set locale
+  community.general.dconf: key="/system/locale/region" value="'fr_FR.UTF-8'" state=present
+
+- name: gnome > Set desktop settings
+  community.general.dconf: key={{ item.key }} value={{ item.value }} state=present
+  with_items:
+    - { key: "/org/gnome/desktop/interface/clock-show-date", value: "false" }
+    - { key: "/org/gnome/desktop/interface/cursor-size", value: 32 }
+    - { key: "/org/gnome/desktop/interface/enable-hot-corners", value: "false" }
+    - { key: "/org/gnome/desktop/interface/locate-pointer", value: "true" }
+    - { key: "/org/gnome/desktop/wm/preferences/action-double-click-titlebar", value: "'none'" }
+    - { key: "/org/gnome/desktop/wm/preferences/button-layout", value: "'appmenu:minimize,maximize,close'" }
+
+- name: gnome > Set Nautilus settings
+  community.general.dconf: key={{ item.key }} value={{ item.value }} state=present
+  with_items:
+    - { key: "/org/gnome/nautilus/preferences/default-sort-order", value: "'type'" }
+
+- name: gnome > Set Key bindings
+  community.general.dconf: key={{ item.key }} value={{ item.value | string }} state=present
+  with_items:
+    - { key: "/org/gnome/settings-daemon/plugins/media-keys/home", value: "['<Super>e']" }
+    - { key: "/org/gnome/settings-daemon/plugins/media-keys/volume-up", value: "['<Alt>Page_Up']" }
+    - { key: "/org/gnome/settings-daemon/plugins/media-keys/volume-down", value: "['<Alt>Page_Down']" }
+    - { key: "/org/gnome/settings-daemon/plugins/media-keys/volume-mute", value: "['<Alt>Pause']" }
+
+## Gnome Theme ##
+- name: gnome > Set desktop theme
+  community.general.dconf: key={{ item.key }} value={{ item.value }} state=present
+  with_items:
+    - { key: "/org/gnome/desktop/interface/color-scheme", value: "'prefer-dark'" }
+    - { key: "/org/gnome/desktop/interface/gtk-theme", value: "'Adwaita-dark'" }
+    - { key: "/org/gnome/desktop/interface/document-font-name", value: "'Cantarell 10'" }
+    - { key: "/org/gnome/desktop/interface/font-name", value: "'Cantarell 10'" }
+    - { key: "/org/gnome/desktop/interface/monospace-font-name", value: "'Source Code Pro 10'" }
+
+## Gnome Apps Folders ## 
+- name: gnome > Define Apps Folders
+  community.general.dconf: 
+    key: /org/gnome/desktop/app-folders/folder-children
+    value: "{{ apps_folders | string }}"
+    state: present
+
+- block:
+  - name: gnome > Set "Finance" folder name
+    community.general.dconf:
+      key: "/org/gnome/desktop/app-folders/folders/Finance/name" 
+      value: "'Finance'"
+      state: present
+  - name: gnome > Set "Finance" apps 
+    community.general.dconf: 
+      key: "/org/gnome/desktop/app-folders/folders/Finance/apps" 
+      value: "{{ folder_finance_apps | string }}"
+      state: present
+
+- block:
+  - name: gnome > Set "GnomeUtilities" folder name
+    community.general.dconf:
+      key: "/org/gnome/desktop/app-folders/folders/GnomeUtilities/name" 
+      value: "'Utilitaires Gnome'"
+      state: present
+  - name: gnome > Set "GnomeUtilities" apps 
+    community.general.dconf: 
+      key: "/org/gnome/desktop/app-folders/folders/GnomeUtilities/apps" 
+      value: "{{ folder_gnomeutilities_apps | string }}"
+      state: present
+  - name: gnome > Set "GnomeUtilities" categories 
+    community.general.dconf: 
+      key: "/org/gnome/desktop/app-folders/folders/GnomeUtilities/categories" 
+      value: "['X-GNOME-Utilities']"
+      state: present
+
+- block:
+  - name: gnome > Set "KiCad" folder name
+    community.general.dconf:
+      key: "/org/gnome/desktop/app-folders/folders/KiCad/name" 
+      value: "'KiCad'"
+      state: present
+  - name: gnome > Set "KiCad" apps 
+    community.general.dconf: 
+      key: "/org/gnome/desktop/app-folders/folders/KiCad/apps" 
+      value: "{{ folder_kicad_apps | string }}"
+      state: present
+
+- block:
+  - name: gnome > Set "Qt" folder name
+    community.general.dconf:
+      key: "/org/gnome/desktop/app-folders/folders/Qt/name" 
+      value: "'Utilitaires Qt'"
+      state: present
+  - name: gnome > Set "Qt" apps 
+    community.general.dconf: 
+      key: "/org/gnome/desktop/app-folders/folders/Qt/apps" 
+      value: "{{ folder_qt_apps | string }}"
+      state: present
+  - name: gnome > Set "Qt" categories 
+    community.general.dconf: 
+      key: "/org/gnome/desktop/app-folders/folders/Qt/categories" 
+      value: "['Qt']"
+      state: present
+  - name: gnome > Set "Qt" excluded-apps 
+    community.general.dconf: 
+      key: "/org/gnome/desktop/app-folders/folders/Qt/excluded-apps" 
+      value: "['anki.desktop']"
+      state: present
+
+- block:
+  - name: gnome > Set "Shogi" folder name
+    community.general.dconf:
+      key: "/org/gnome/desktop/app-folders/folders/Shogi/name" 
+      value: "'Shogi'"
+      state: present
+  - name: gnome > Set "Shogi" apps 
+    community.general.dconf: 
+      key: "/org/gnome/desktop/app-folders/folders/Shogi/apps" 
+      value: "{{ folder_shogi_apps | string }}"
+      state: present
+
+- block:
+  - name: gnome > Set "Steam" folder name
+    community.general.dconf:
+      key: "/org/gnome/desktop/app-folders/folders/Steam/name" 
+      value: "'Steam'"
+      state: present
+  - name: gnome > Set "Steam" apps 
+    community.general.dconf: 
+      key: "/org/gnome/desktop/app-folders/folders/Steam/apps" 
+      value: "{{ folder_steam_apps | string }}"
+      state: present
+
+- block:
+  - name: gnome > Set "System" folder name
+    community.general.dconf:
+      key: "/org/gnome/desktop/app-folders/folders/System/name" 
+      value: "'Système'"
+      state: present
+  - name: gnome > Set "System" apps 
+    community.general.dconf: 
+      key: "/org/gnome/desktop/app-folders/folders/System/apps" 
+      value: "{{ folder_system_apps | string }}"
+      state: present

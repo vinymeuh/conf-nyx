@@ -1,0 +1,14 @@
+- name: locale-gen
+  command: locale-gen
+
+- name: grub-mkconfig
+  command: grub-mkconfig -o /boot/grub/grub.cfg
+
+- name: restart-nftables
+  ansible.builtin.systemd: name=nftables state=restarted
+
+- name: restart-systemd-networkd
+  ansible.builtin.systemd: name=systemd-networkd state=restarted
+
+- name: restart-ulogd
+  ansible.builtin.systemd: name=ulogd state=restarted

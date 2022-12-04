@@ -1,0 +1,2 @@
+# RaspberryPi Pico
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0003", OWNER="viny", MODE="0600" 

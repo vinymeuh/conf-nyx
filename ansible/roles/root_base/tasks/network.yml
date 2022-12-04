@@ -1,0 +1,43 @@
+- name: network > Install network tools & services
+  community.general.pacman: name={{ item }}
+  with_items:
+    - avahi,nss-mdns
+    - systemd-resolvconf
+    - nftables,ulogd
+
+- name: network > Enable mDNS hostname resolution
+  ansible.builtin.lineinfile:
+    path: /etc/nsswitch.conf
+    regexp: '^hosts: files mymachines(.*)'
+    line: 'hosts: files mdns4_minimal [NOTFOUND=return] mymachines\1'
+    backrefs: yes
+
+- name: network > Default network configuration
+  ansible.builtin.copy: src=default.network dest=/etc/systemd/network/default.network
+  notify: restart-systemd-networkd
+
+- name: network > Enable systemd DNS stub file
+  ansible.builtin.file: state=link src=/run/systemd/resolve/stub-resolv.conf path=/etc/resolv.conf force=yes
+
+- name: network> Copy ulogd configuration file
+  ansible.builtin.copy: src=ulogd.conf dest=/etc/ulogd.conf
+  notify: restart-ulogd
+
+- name: network> Copy nftables configuration file
+  ansible.builtin.copy: src=nftables.conf dest=/etc/nftables.conf
+  notify: restart-nftables
+
+- name: network > Enable network services
+  ansible.builtin.systemd: name={{ item }} enabled=yes state=started
+  with_items:
+    - avahi-daemon
+    - systemd-networkd
+    - systemd-resolved
+    - systemd-timesyncd
+    - ulogd
+
+# nftables service stop itfself after loading rules
+- name: network > Enable nftables service
+  ansible.builtin.systemd: name=nftables enabled=yes
+  notify: restart-nftables
+  

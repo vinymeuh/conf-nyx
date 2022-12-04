@@ -1,0 +1,46 @@
+# ~/.zshrc
+set -o emacs
+
+export LANG=fr_FR.UTF-8
+export LC_MESSAGES=en_US.UTF-8
+
+export PROMPT="%F{220}%n@%m %1~ %#%f "
+
+export EDITOR=vim
+export GIT_EDITOR=vim
+export PAGER=less
+
+# PATH
+typeset -U path
+path=("$HOME/conf-nyx/bin" "$HOME/.local/bin" '/usr/local/bin' $path)
+[ -d "$HOME/.cargo/bin" ] && path=("$HOME/.cargo/bin" $path)
+[ -d "$HOME/go/bin" ] && path=("$HOME/go/bin" $path)
+[ -d "$HOME/Zig/current" ] && path=("$HOME/Zig/current" $path)
+export PATH
+
+# pyenv
+export PYENV_ROOT=$HOME/.pyenv
+path=("$PYENV_ROOT/bin" $path)
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
+# aliases & functions
+alias cp='cp -i'
+alias df='df -PH'
+alias h='history'
+alias ll='ls -lsa'
+alias ls='ls --color=auto'
+alias mv='mv -i'
+alias open='xdg-open'
+alias rm='rm -i'
+alias vi=vim
+
+alias confstatus='cd ~/conf-nyx && git status'
+alias confdiff='cd ~/conf-nyx && git diff'
+
+alias code='~/Applications/VSCode-linux-x64/bin/code --disable-gpu'
+alias list-photo-tags='exiftool -G:1 -DateTimeOriginal -Artist -Copyright -xmp:all -iptc:all'
+alias radiogaga='ncmpcpp -h radiogaga.home'
+
+# zsh-autosuggestions plugin
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh

@@ -1,0 +1,53 @@
+# https://archlinux.org/groups/x86_64/gnome/
+- name: gnome > Install my selection from 'gnome' group
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - baobab
+      - eog,evince
+      - file-roller
+      - gdm
+      - gnome-backgrounds
+      - gnome-calculator
+      - gnome-characters
+      - gnome-clocks
+      - gnome-color-manager
+      - gnome-console
+      - gnome-contacts
+      - gnome-control-center
+      - gnome-disk-utility
+      - gnome-font-viewer
+      - gnome-shell,gnome-shell-extensions
+      - gnome-keyring
+      - gnome-menus
+      - gnome-screenshot
+      - gnome-session
+      - gnome-settings-daemon
+      - gnome-software
+      - gnome-system-monitor
+      - gnome-text-editor
+      - gnome-themes-extra
+      - gnome-user-share
+      - gnome-video-effects
+      - gnome-weather
+      - gvfs,gvfs-afc,gvfs-goa,gvfs-google,gvfs-gphoto2,gvfs-mtp,gvfs-nfs,gvfs-smb
+      - nautilus,sushi
+      - mutter
+      - tracker3,tracker3-miners
+      - xdg-user-dirs-gtk,xdg-desktop-portal-gnome
+
+# https://archlinux.org/groups/x86_64/gnome-extra/
+- name: gnome > Install my selection from 'gnome-extra' group
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - dconf-editor
+      - ghex
+      - gnome-tweaks
+      - gnome-usage
+
+- name: gnome > Install IBus
+  community.general.pacman: name=ibus
+
+- name: gnome > Enable GDM
+  ansible.builtin.systemd: name=gdm enabled=yes state=started
