@@ -6,7 +6,6 @@
       - base-devel
       - bridge-utils
       - curl
-      - ddcutil
       - dmidecode
       - exfat-utils
       - fzf
@@ -60,10 +59,10 @@
   ansible.builtin.systemd: name=incrond enabled=yes state=started
 
 # aur_builder setup
-- name: base-aur > Create aur_builder user
+- name: base > Create aur_builder user
   user: name=aur_builder system=yes
 
-- name: base-aur > Allow passwordless sudo pacman for aur_builder
+- name: base > Allow passwordless sudo pacman for aur_builder
   lineinfile:
     path: /etc/sudoers.d/aur_builder-allow-to-sudo-pacman
     state: present
@@ -71,7 +70,50 @@
     validate: /usr/sbin/visudo -cf %s
     create: yes
 
-- name: base_aur > Copy .bash_profile for aur_builder
+- name: base > Copy .bash_profile for aur_builder
   ansible.builtin.copy: src=aur_builder/bash_profile dest=~/.bash_profile mode=0400
   become: yes
   become_user: aur_builder
+
+# audio
+- name: base > Install PulseAudio
+  community.general.pacman: name=pulseaudio,pulseaudio-alsa,pulsemixer
+
+# video
+- block:
+  - name: base > Install Wayland
+    community.general.pacman: name=wayland,wayland-protocols,wayland-utils
+  - name: base > Install XWayland
+    community.general.pacman: name=xorg-xwayland,xorg-xlsclients
+  - name: base > Mesa and Vulkan
+    community.general.pacman: name=mesa,vulkan-icd-loader,vulkan-tools
+  - name: base > Install Video Acceleration (VA) packages
+    community.general.pacman: name=libva,libva-utils
+
+# printer
+- block:
+  - name: base > Install CUPS
+    community.general.pacman: name=cups,ghostscript
+  - name: base > Enable CUPS service
+    ansible.builtin.systemd: name=cups enabled=yes state=started
+  - name: base > Set default page format to A4
+    ansible.builtin.lineinfile: dest=/etc/papersize line="a4" create=yes
+
+# fonts
+- block:
+  - name: base > Install fonts
+    community.general.pacman: name={{ packages | join(',') }}
+    vars:
+      packages:
+        - noto-fonts,noto-fonts-cjk,noto-fonts-emoji
+        - ttf-caladea
+        - ttf-dejavu
+        - ttf-liberation
+        - ttf-opensans
+        - ttf-roboto
+  - name: base > Enable fonts presets
+    ansible.builtin.file: state=link src="/usr/share/fontconfig/conf.avail/{{ item }}" path="/etc/fonts/conf.d/{{ item }}"
+    with_items:
+      - 10-sub-pixel-rgb.conf
+      - 11-lcdfilter-default.conf
+      - 70-no-bitmaps.conf

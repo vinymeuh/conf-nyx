@@ -4,7 +4,7 @@
 
 ### Bootstrap
 
-1. Install [Arch Linux](https://github.com/vinymeuh/nyx-meushi/blob/master/notes/INSTALL-ARCHLINUX.md)
+1. Install [Arch Linux](https://github.com/vinymeuh/nyx-meushi/blob/master/INSTALL-ARCHLINUX.md)
 
 2. Install **pyenv** using [pyenv installer](https://github.com/pyenv/pyenv-installer)
 

@@ -1,0 +1,23 @@
+- name: nvidia > Install Nvidia driver
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - nvidia-dkms
+      - nvidia-utils
+      - nvidia-settings
+      - nvtop
+
+- name: nvidia > Enable Nvidia KMS only for normal modes (not for recovery)
+  ansible.builtin.lineinfile: 
+    dest: /etc/default/grub 
+    regexp: '^GRUB_CMDLINE_LINUX_DEFAULT=' 
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT="nvidia-drm.modeset=1"'
+  notify: grub-mkconfig
+
+- name: nvidia > Install Video Decode and Presentation API for UNIX (VDPAU) packages
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - libvdpau
+      - libva-vdpau-driver 
+      - vdpauinfo

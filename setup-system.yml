@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  tasks:
+    - {import_role: name=system tasks_from=kernel, tags: ['kernel']}
+    - {import_role: name=system tasks_from=base, tags: ['base']}
+    - {import_role: name=system tasks_from=nvidia, tags: ['nvidia']}
+    - {import_role: name=system tasks_from=gnome, tags: ['gnome']}
