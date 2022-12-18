@@ -1,0 +1,59 @@
+- name: userapps > User viny
+  ansible.builtin.user: name=viny group=viny shell=/bin/zsh groups=uucp,wheel append=yes
+
+- name: userapps > Install my base apps
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - chromium
+      - firefox
+      - thunderbird,thunderbird-i18n-fr 
+      - gnucash
+      - hunspell,hunspell-fr
+      - inkscape
+      - keepassxc
+      - mpc,ncmpcpp
+      - pdfarranger
+      - quodlibet
+      - syncthing
+      - vlc
+
+- name: userapps > Install photo management softwares
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - exiv2
+      - imagemagick
+      - perl-image-exiftool
+      - rawtherapee
+      - shotwell
+
+- name: userapps > Install base dev tools
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - cmake
+      - gdb
+      - lcov
+      - minicom
+      - perf
+
+- name: userapps > Install C++ dev tools
+  community.general.pacman: name=heaptrack
+
+- name: userapps > Install JRE OpenJDK
+  community.general.pacman: name=jre-openjdk
+
+- name: userapps > KiCad
+  community.general.pacman: name=kicad,kicad-library
+
+- name: userapps > Install Saleae Logic 2 dependencies
+  community.general.pacman: name=libxcrypt-compat
+
+- name: userapps > Install custom udev rules
+  ansible.builtin.copy: src=udev/{{ item }} dest=/etc/udev/rules.d/{{ item }} mode=0644
+  with_items:
+    - esp32.rules
+    - raspberry.rules
+    - saleae.rules
+
