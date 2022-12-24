@@ -14,8 +14,8 @@ export PAGER=less
 typeset -U path
 path=("$HOME/conf-nyx/bin" "$HOME/.local/bin" '/usr/local/bin' $path)
 [ -d "$HOME/.cargo/bin" ] && path=("$HOME/.cargo/bin" $path)
-[ -d "$HOME/go/bin" ] && path=("$HOME/go/bin" $path)
-[ -d "$HOME/Zig/current" ] && path=("$HOME/Zig/current" $path)
+[ -d "$HOME/go/current" ] && path=("$HOME/go/current/bin" $path)
+[ -d "$HOME/zig/current" ] && path=("$HOME/zig/current" $path)
 export PATH
 
 # pyenv
