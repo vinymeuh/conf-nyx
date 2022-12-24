@@ -15,7 +15,6 @@
       - mpc,ncmpcpp
       - pdfarranger
       - quodlibet
-      - syncthing
       - vlc
 
 - name: userapps > Install photo management softwares
@@ -56,4 +55,3 @@
     - esp32.rules
     - raspberry.rules
     - saleae.rules
-
