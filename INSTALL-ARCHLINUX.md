@@ -102,13 +102,34 @@ Edit **/etc/hosts**
 passwd
 ```
 
-* Setup Grub with AMD microcode
+* Setup systemd-boot with AMD microcode
 
 ```
-pacman -S grub efibootmgr dosfstools mtools amd-ucode
-grub-install --target=x86_64-efi --bootloader-id=GRUB --recheck
-grub-mkconfig -o /boot/grub/grub.cfg
+bootctl install
+cp /usr/share/systemd/bootctl/arch.conf /boot/efi/loader/entries/arch-lts.conf
 ```
+
+Adapt **/boot/efi/loader/entries/arch-lts.conf**
+
+```
+title   Arch Linux LTS
+linux   /vmlinuz-linux-lts
+initrd  /amd-ucode.img
+initrd  /initramfs-linux-lts.img
+options root=UUID=78da4ebd-5eba-4a7c-8caf-5f297eece0a7 rootfstype=ext4 add_efi_memmap
+```
+
+**Note**: find UUID with ```blkid```.
+
+Edit **/boot/efi/loader/loader.conf**:
+
+```
+timeout 3
+console-mode max
+default arch-lts.conf
+```
+
+Check configuration with ```bootctl list```
 
 * Reboot
 
