@@ -5,7 +5,7 @@
 # Credentials are securely stored in Gnome Keyring
 #  ~> secret-tool store --label 'kopia' kopia password
 
-KOPIA_BIN="$HOME/.local/bin/kopia"
+KOPIA_BIN="$HOME/bin/kopia"
 export KOPIA_CHECK_FOR_UPDATES=false
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
