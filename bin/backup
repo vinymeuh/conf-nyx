@@ -4,6 +4,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Credentials are securely stored in Gnome Keyring
 #  ~> secret-tool store --label 'kopia' kopia password
+#
 
 KOPIA_BIN="$HOME/bin/kopia"
 export KOPIA_CHECK_FOR_UPDATES=false
@@ -120,7 +121,7 @@ if [ "$1" == "fs" ]; then
     if [ "$2" == "list" ]; then
         Info "open filesystem repository '${backup_dir}/${target}'"
         ${KOPIA} repository connect filesystem --path="${backup_dir}/${target}" --password="${PASSWORD}"
-        ${KOPIA} snapshot list
+        ${KOPIA} snapshot list --all
         ${KOPIA} repository disconnect
         exit
     fi
