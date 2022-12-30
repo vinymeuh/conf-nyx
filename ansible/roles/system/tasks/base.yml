@@ -3,6 +3,7 @@
   vars:
     packages:
       - acpi
+      - avahi,nss-mdns
       - base-devel
       - bridge-utils
       - curl
@@ -13,9 +14,10 @@
       - incron
       - lm_sensors
       - lshw
-      - nmap
-      - neovim
       - man-db,man-pages
+      - neovim
+      - networkmanager
+      - nmap
       - openssh
       - pacman-contrib,pacutils,expac
       - python,python-psutil,python-wheel
@@ -75,6 +77,27 @@
   ansible.builtin.copy: src=aur_builder/bash_profile dest=~/.bash_profile mode=0400
   become: yes
   become_user: aur_builder
+
+# network
+- name: base > Enable NetworkManager DNS stub file
+  ansible.builtin.file: state=link src=/run/NetworkManager/resolv.conf path=/etc/resolv.conf force=yes
+
+- block:
+  - name: base > Enable mDNS hostname resolution
+    ansible.builtin.lineinfile:
+      path: /etc/nsswitch.conf
+      regexp: '^hosts: files mymachines(.*)'
+      line: 'hosts: files mdns4_minimal [NOTFOUND=return] mymachines\1'
+      backrefs: yes
+  - name: base > Enable avahi-daemon service
+    ansible.builtin.systemd: name=avahi-daemon enabled=yes state=started
+
+# firewall
+- name: firewall > Install Firewalld
+  community.general.pacman: name=firewalld
+
+- name: firewall > Enable & Start Firewalld service
+  ansible.builtin.systemd: name=firewalld enabled=yes state=started
 
 # audio
 - name: base > Install PulseAudio
