@@ -79,9 +79,6 @@
   become_user: aur_builder
 
 # network
-- name: base > Enable NetworkManager DNS stub file
-  ansible.builtin.file: state=link src=/run/NetworkManager/resolv.conf path=/etc/resolv.conf force=yes
-
 - block:
   - name: base > Enable mDNS hostname resolution
     ansible.builtin.lineinfile:
