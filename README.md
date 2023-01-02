@@ -50,8 +50,6 @@ AUR packages installed:
 
 * https://aur.archlinux.org/art-rawconverter.git
 * https://aur.archlinux.org/onlyoffice-bin.git
-* https://aur.archlinux.org/timeshift.git 
-* https://aur.archlinux.org/timeshift-autosnap.git 
 
 ## Notes & tips
 
