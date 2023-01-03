@@ -16,8 +16,7 @@ Reference: https://wiki.archlinux.org/index.php/Installation_guide
 * Create disk layout
 
 ```
-[root@meushi ~]# fdisk -l
-Disk /dev/sda: 931,51 GiB, 1000204886016 bytes, 1953525168 sectors
+Disk /dev/sda: 931.51 GiB, 1000204886016 bytes, 1953525168 sectors
 Disk model: Samsung SSD 860 
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
@@ -25,11 +24,10 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disklabel type: gpt
 Disk identifier: F9E0FD17-177D-11EB-9E5A-DD0136727040
 
-Device          Start        End    Sectors  Size Type
-/dev/sda1        2048    1128447    1126400  550M EFI System
-/dev/sda2     1128448  105986047  104857600   50G Linux root (x86-64)
-/dev/sda3   105986048 1154562047 1048576000  500G Linux home
-/dev/sda4  1154562048 1953525134  798963087  381G Linux filesystem
+Device         Start        End    Sectors   Size Type
+/dev/sda1       2048    1128447    1126400   550M EFI System
+/dev/sda2    1128448  195312500  194184053  92.6G Linux root (x86-64)
+/dev/sda3  195313664 1953523711 1758210048 838.4G Linux user's home
 ```
 
 * Create filesystems
@@ -37,8 +35,6 @@ Device          Start        End    Sectors  Size Type
 ```
 mkfs.fat -F32 /dev/sda1
 mkfs.ext4 /dev/sda2
-mkfs.ext4 /dev/sda3
-mkfs.ext4 /dev/sda4
 ```
 
 * Bootstrap ArchLinux
@@ -138,22 +134,13 @@ exit
 reboot
 ```
 
-* Login as **root** and setup network
+## Network connection
 
-Create **/etc/systemd/network/dhcp.network**
-
-```
-[Match]
-Name=*
-[Network]
-DHCP=yes
-```
+Login as **root** and setup network
 
 ```
-systemctl start systemd-networkd
-systemctl enable systemd-networkd
-systemctl start systemd-resolved
-systemctl enable systemd-resolved
+systemctl enable NetworkManager
+systemctl start NetworkManager
 ```
 
 ## User creation
@@ -171,28 +158,59 @@ In **/etc/sudoers** uncomment:
 %wheel ALL=(ALL) ALL
 ```
 
-## Timeshift
-
-
-```
-# grep BACKUPS /etc/fstab
-LABEL=BACKUPS	/backups	ext4	defaults	0 2
-```
+## Setup encrypted partition for user home
 
 ```
-mkdir /backups
-tune2fs -L BACKUPS /backups
-mount /backups
+cryptsetup luksFormat /dev/sda3
+cryptsetup open /dev/sda3 home-viny
+mkfs.ext4 /dev/mapper/hom-viny
 ```
 
-Then launch **Timeshift** graphical application as normal user:
+```
+mkdir /home/viny
+mount -t ext4 /dev/mapper/home-viny /home/viny
+```
 
-* RSYNC
-* Keep 5 Daily snaphosts
-
-Check configuration with:
+Edit **/etc/pam.d/system-login**
 
 ```
-sudo timeshift --list-devices
-sudo timeshift --list-snapshots
+...
+auth       include    system-auth
+auth       optional   pam_exec.so expose_authtok /etc/pam_cryptsetup.sh
+
+account    required   pam_access.so
+...
 ```
+
+Create executable script **/etc/pam_cryptsetup.sh**:
+
+```
+#!/bin/sh
+
+CRYPT_USER=viny"
+PARTITION="/dev/sda3"
+NAME="home-$CRYPT_USER"
+
+if [ "$PAM_USER" == "$CRYPT_USER" ] && [ ! -e "/dev/mapper/$NAME" ]; then
+    /usr/bin/cryptsetup open $PARTITION $NAME
+fi
+```
+
+Create **/etc/systemd/system/home-viny.mount**:
+
+```
+[Unit]
+Requires=user@1000.service
+Before=user@1000.service
+
+[Mount]
+Where=/home/viny
+What=/dev/mapper/home-viny
+Type=ext4
+Options=defaults
+
+[Install]
+RequiredBy=user@1000.service
+```
+
+**Note**: locking after unmout will be setup later with Ansible.
