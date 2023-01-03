@@ -33,6 +33,7 @@
       - gvfs,gvfs-afc,gvfs-goa,gvfs-google,gvfs-gphoto2,gvfs-mtp,gvfs-nfs,gvfs-smb
       - nautilus,sushi
       - mutter
+      - seahorse
       - tracker3,tracker3-miners
       - xdg-user-dirs-gtk,xdg-desktop-portal-gnome
 
