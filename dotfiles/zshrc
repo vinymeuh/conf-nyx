@@ -14,7 +14,10 @@ export PAGER=less
 typeset -U path
 path=("$HOME/conf-nyx/bin" "$HOME/bin" '/usr/local/bin' $path)
 [ -d "$HOME/.cargo/bin" ] && path=("$HOME/.cargo/bin" $path)
-[ -d "$HOME/go/current" ] && path=("$HOME/go/current/bin" $path)
+if [ -d "$HOME/go/current" ]; then
+    export GOPATH="$HOME/go/current"
+    path=("$GOPATH/bin" $path)
+fi
 [ -d "$HOME/zig/current" ] && path=("$HOME/zig/current" $path)
 export PATH
 
