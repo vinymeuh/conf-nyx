@@ -1,2 +1,5 @@
 - name: locale-gen
   command: locale-gen
+
+- name: pacman-sync
+  command: pacman -Sy

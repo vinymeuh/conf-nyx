@@ -11,4 +11,3 @@
     - {import_role: name=system tasks_from=gnome, tags: ['gnome']}
     - {import_role: name=system tasks_from=userapps, tags: ['userapps']}
     - {import_role: name=system tasks_from=podman, tags: ['podman']}
-    - {import_role: name=system tasks_from=steam, tags: ['steam']}

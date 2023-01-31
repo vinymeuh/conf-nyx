@@ -13,7 +13,9 @@
       - git
       - incron
       - lm_sensors
+      - lsof
       - lshw
+      - lsb-release
       - man-db,man-pages
       - neovim
       - networkmanager
