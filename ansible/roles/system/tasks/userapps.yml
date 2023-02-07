@@ -36,6 +36,7 @@
       - lcov
       - minicom
       - perf
+      - python-pre-commit
 
 - name: userapps > Install C++ dev tools
   community.general.pacman: name=heaptrack
