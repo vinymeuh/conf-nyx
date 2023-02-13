@@ -37,7 +37,7 @@ alias ls='ls --color=auto'
 alias mv='mv -i'
 alias open='xdg-open'
 alias rm='rm -i'
-alias vi=vim
+alias vi=nvim
 
 alias confstatus='cd ~/conf-nyx && git status'
 alias confdiff='cd ~/conf-nyx && git diff'
