@@ -24,7 +24,6 @@
       - exiv2
       - imagemagick
       - perl-image-exiftool
-      - rawtherapee
       - shotwell
 
 - name: userapps > Install base dev tools
