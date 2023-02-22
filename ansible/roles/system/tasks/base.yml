@@ -32,6 +32,12 @@
       - wget
       - zsh,zsh-autosuggestions
 
+- name: base > Remove some defaults package
+  community.general.pacman: name={{ packages | join(',') }} state=absent
+  vars:
+    packages:
+      - vim,vim-runtime
+
 - name: base > Enable locale
   ansible.builtin.lineinfile:
     dest: /etc/locale.gen
