@@ -17,11 +17,6 @@
     - { key: "/org/gnome/desktop/wm/preferences/action-double-click-titlebar", value: "'none'" }
     - { key: "/org/gnome/desktop/wm/preferences/button-layout", value: "'appmenu:minimize,maximize,close'" }
 
-- name: gnome > Set Nautilus settings
-  community.general.dconf: key={{ item.key }} value={{ item.value }} state=present
-  with_items:
-    - { key: "/org/gnome/nautilus/preferences/default-sort-order", value: "'type'" }
-
 - name: gnome > Set Key bindings
   community.general.dconf: key={{ item.key }} value={{ item.value | string }} state=present
   with_items:

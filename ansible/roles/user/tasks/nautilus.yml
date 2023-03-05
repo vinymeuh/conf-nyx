@@ -1,0 +1,14 @@
+- name: nautilus > Set Nautilus settings
+  community.general.dconf: key={{ item.key }} value={{ item.value }} state=present
+  with_items:
+    - { key: "/org/gnome/nautilus/preferences/default-sort-order", value: "'type'" }
+
+- name: nautilus > Create scripts subdirectories
+  file: dest='~/.local/share/nautilus/scripts/{{ item.path }}' state=directory mode=0700    
+  with_filetree: 'files/nautilus_scripts'
+  when: item.state == 'directory'
+
+- name: nautilus > Create symlinks for scripts
+  ansible.builtin.file: src='{{ item.src }}' dest='~/.local/share/nautilus/scripts/{{ item.path }}' state=link force=yes
+  with_filetree: 'files/nautilus_scripts'
+  when: item.state == 'file'
