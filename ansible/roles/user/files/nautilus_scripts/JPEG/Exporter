@@ -1,32 +1,40 @@
 #!/usr/bin/env bash
 
-export_dir="$(xdg-user-dir DOWNLOAD)/Export"
-[ -d "${export_dir}" ] || mkdir -p "${export_dir}"
+ERRORS_OCCURED=0
 
 hash convert 2>/dev/null
 if [ $? -ne 0 ]; then
-    notify-send -u critical 'Nautilus script' 'Could not find "convert" (imagemagick)'
+    notify-send -u critical 'Nautilus - JPEG - Exporter' 'Could not find "convert" (imagemagick)'
     exit 1
 fi
 
-for arg
-do
-    infile="${arg}"
-    outfile="${export_dir}/$(basename ${infile})"
-    
-    mimetype=$(file --mime-type -b -- "$infile")
-    
+EXPORT_DIR="$(xdg-user-dir DOWNLOAD)/Export"
+[ -d "${EXPORT_DIR}" ] || mkdir -p "${EXPORT_DIR}"
+
+readonly WD=$PWD
+for selected_uri in $NAUTILUS_SCRIPT_SELECTED_URIS; do
+    uri_end=${selected_uri#"$NAUTILUS_SCRIPT_CURRENT_URI"}
+    printf -v selected_path '%s%b' "${WD}" "${uri_end//%/\\x}"
+
+    # Do something here
+    mimetype=$(file --mime-type -b -- "$selected_path")
+
     case $mimetype in
         "image/jpeg")
-            convert -strip -resize 40% "${infile}" "${outfile}"
+            outfile="${EXPORT_DIR}/$(basename "$selected_path")"
+            convert -strip -resize 40% "$selected_path" "${outfile}"
             if [ $? -ne 0 ]; then
-                notify-send -u critical 'Nautilus script' "$(basename ${infile}): problem while converting"
+                notify-send -u critical 'Nautilus - JPEG - Exporter' "$(basename "$selected_path"): an error occurred"
+                ERRORS_OCCURED=1
             fi
             ;;
         *)
-            notify-send -u critical 'Nautilus script' "$(basename ${infile}): mime type not supported"
+            notify-send -u critical 'Nautilus - JPEG - Exporter' "$(basename "$selected_path"): mime type not supported"
+            ERRORS_OCCURED=1
             ;;
     esac
 done
 
-nautilus "${export_dir}"
+if [ $ERRORS_OCCURED -eq 0 ]; then
+    notify-send -u normal 'Nautilus - JPEG - Exporter' "All files processed successfully"
+fi

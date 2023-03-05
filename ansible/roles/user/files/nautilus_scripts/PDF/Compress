@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# -DPFSETTINGS=
+#  * /screen => 72dpi
+#  * /ebook => 150dpi
+#  * /printer => 300dpi
+
+ERRORS_OCCURED=0
+
+readonly WD=$PWD
+for selected_uri in $NAUTILUS_SCRIPT_SELECTED_URIS; do
+    uri_end=${selected_uri#"$NAUTILUS_SCRIPT_CURRENT_URI"}
+    printf -v selected_path '%s%b' "${WD}" "${uri_end//%/\\x}"
+
+    # Do something here
+    mimetype=$(file --mime-type -b -- "$selected_path")
+
+    case $mimetype in
+        "application/pdf")
+            outfile=$(echo "$selected_path" | cut -f 1 -d '.')_compressed.pdf
+            gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook \
+               -dNOPAUSE -dQUIET -dBATCH \
+               -sOutputFile="$outfile" "$selected_path"
+            if [ $? -ne 0 ]; then
+                notify-send -u critical 'Nautilus - PDF - Compress' "$(basename "$selected_path"): an error occurred"
+                ERRORS_OCCURED=1
+            fi
+            ;;
+        *)
+            notify-send -u critical 'Nautilus - PDF - Compress' "$(basename "$selected_path"): mime type not supported"
+            ERRORS_OCCURED=1
+            ;;
+    esac
+done
+
+if [ $ERRORS_OCCURED -eq 0 ]; then
+    notify-send -u normal 'Nautilus - PDF - Compress' "All files processed successfully"
+fi
