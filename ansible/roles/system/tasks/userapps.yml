@@ -32,6 +32,7 @@
     packages:
       - cmake
       - gdb
+      - gnome-builder
       - lcov
       - minicom
       - perf
