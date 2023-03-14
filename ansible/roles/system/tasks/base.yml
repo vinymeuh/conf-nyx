@@ -105,8 +105,8 @@
   ansible.builtin.systemd: name=firewalld enabled=yes state=started
 
 # audio
-- name: base > Install PulseAudio
-  community.general.pacman: name=pulseaudio,pulseaudio-alsa,pulsemixer
+- name: base > Install Pipewire
+  community.general.pacman: name=pipewire,pipewire-pulse,pulsemixer
 
 # video
 - block:
