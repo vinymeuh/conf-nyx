@@ -55,6 +55,18 @@
       state: present
 
 - block:
+  - name: gnome > Set "GnomeDevelopment" folder name
+    community.general.dconf:
+      key: "/org/gnome/desktop/app-folders/folders/GnomeDevelopment/name" 
+      value: "'Gnome Dev Tools'"
+      state: present
+  - name: gnome > Set "GnomeDevelopment" apps 
+    community.general.dconf: 
+      key: "/org/gnome/desktop/app-folders/folders/GnomeDevelopment/apps" 
+      value: "{{ folder_gnomedevelopment_apps | string }}"
+      state: present
+
+- block:
   - name: gnome > Set "GnomeUtilities" folder name
     community.general.dconf:
       key: "/org/gnome/desktop/app-folders/folders/GnomeUtilities/name" 
@@ -87,7 +99,7 @@
   - name: gnome > Set "Qt" folder name
     community.general.dconf:
       key: "/org/gnome/desktop/app-folders/folders/Qt/name" 
-      value: "'Utilitaires Qt'"
+      value: "'Qt'"
       state: present
   - name: gnome > Set "Qt" apps 
     community.general.dconf: 

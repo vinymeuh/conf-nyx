@@ -2,6 +2,7 @@ code_install_dir: ~/Applications/VSCode-linux-x64
 
 apps_folders:
   - Finance
+  - GnomeDevelopment
   - GnomeUtilities
   - KiCad
   - Photo
@@ -13,6 +14,13 @@ apps_folders:
 folder_finance_apps:
   - gnucash.desktop
   - portfolio-performance.desktop
+
+folder_gnomedevelopment_apps:
+  - org.gnome.Builder.desktop
+  - org.gnome.Devhelp.desktop
+  - org.gnome.GHex.desktop
+  - org.gnome.dspy.desktop
+  - org.gnome.Sysprof.desktop
 
 folder_gnomeutilities_apps:
   - ca.desrt.dconf-editor.desktop
@@ -41,6 +49,7 @@ folder_qt_apps:
   - qv4l2.desktop
 
 folder_shogi_apps:
+  - com.github.vinymeuh.BitboardCalculator.desktop
   - qshogi.desktop
 
 folder_steam_apps:
@@ -50,6 +59,7 @@ folder_steam_apps:
 folder_system_apps:
   - avahi-discover.desktop
   - cups.desktop
+  - firewall-config.desktop
   - gnome-control-center.desktop
   - gnome-system-monitor.desktop
   - java-java-openjdk.desktop
@@ -58,5 +68,6 @@ folder_system_apps:
   - lstopo.desktop
   - nvidia-settings.desktop
   - nvtop
+  - org.gnome.seahorse.Application.desktop
   - org.gnome.Usage.desktop
   - timeshift-gtk.desktop
