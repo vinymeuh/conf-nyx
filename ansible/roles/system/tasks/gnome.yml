@@ -52,6 +52,3 @@
 
 - name: gnome > Enable GDM
   ansible.builtin.systemd: name=gdm enabled=yes state=started
-
-- name: gnome > Install Flatpak
-  community.general.pacman: name=flatpak
