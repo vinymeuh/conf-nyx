@@ -26,23 +26,20 @@
       - perl-image-exiftool
       - shotwell
 
-- name: userapps > Install base dev tools
+- name: userapps > Install dev tools
   community.general.pacman: name={{ packages | join(',') }}
   vars:
     packages:
       - cmake
+      - dotnet-runtime
       - gdb
       - gnome-builder
+      - heaptrack
+      - jre-openjdk
       - lcov
       - minicom
       - perf
       - python-pre-commit
-
-- name: userapps > Install C++ dev tools
-  community.general.pacman: name=heaptrack
-
-- name: userapps > Install JRE OpenJDK
-  community.general.pacman: name=jre-openjdk
 
 - name: userapps > KiCad
   community.general.pacman: name=kicad,kicad-library
