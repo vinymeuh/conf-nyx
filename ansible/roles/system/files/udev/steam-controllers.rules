@@ -1,0 +1,7 @@
+# Reference https://steamcommunity.com/app/221410/discussions/0/1693795812304458372/
+
+# This rule is necessary for gamepad emulation
+KERNEL=="uinput", MODE="0660", GROUP="viny", OPTIONS+="static_node=uinput"
+
+# DualShock 4 Slim over USB hidraw
+KERNEL=="hidraw*", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="09cc", OWNER="viny", MODE="0600"
