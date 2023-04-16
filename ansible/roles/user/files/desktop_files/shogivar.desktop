@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=shogivar
+GenericName=shogivar
+Comment=shogivar
+Exec=/usr/local/bin/shogivar
+Icon=/usr/local/share/games/shogivar/titles/armour.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Game;BoardGame;

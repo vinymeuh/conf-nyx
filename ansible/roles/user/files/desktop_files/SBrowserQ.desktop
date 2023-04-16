@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=SBrowserQ
+GenericName=SBrowserQ
+Comment=SBrowserQ
+Exec=/home/viny/Applications/SBrowserQ_V3.7_Linux/jre/bin/java -cp /home/viny/Applications/SBrowserQ_V3.7_Linux/SbrowserQ.jar -splash:/home/viny/Applications/SBrowserQ_V3.7_Linux/SbrowserQ.png SBrowserQ
+Icon=/home/viny/Applications/SBrowserQ_V3.7_Linux/SbrowserQ.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Game;BoardGame;
