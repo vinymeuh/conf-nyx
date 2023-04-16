@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Shogidokoro
+GenericName=Shogidokoro
+Comment=Shogidokoro
+Exec=/home/viny/conf-nyx/bin/Shogidokoro
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Game;BoardGame;
