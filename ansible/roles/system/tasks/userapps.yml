@@ -31,7 +31,7 @@
   vars:
     packages:
       - cmake
-      - dotnet-runtime
+      - dotnet-runtime,dotnet-sdk
       - gdb
       - gnome-builder
       - heaptrack
