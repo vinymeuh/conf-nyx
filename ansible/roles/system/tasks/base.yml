@@ -5,6 +5,7 @@
       - acpi
       - avahi,nss-mdns
       - base-devel
+      - bluez,bluez-utils
       - bridge-utils
       - curl
       - dmidecode
@@ -17,7 +18,6 @@
       - lshw
       - lsb-release
       - man-db,man-pages
-      - neovim
       - networkmanager
       - nmap
       - openssh
@@ -29,6 +29,7 @@
       - tree
       - unrar,unzip,xz
       - usbutils
+      - vi
       - wget
       - zsh,zsh-autosuggestions
 
