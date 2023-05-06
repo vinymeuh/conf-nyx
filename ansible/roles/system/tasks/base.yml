@@ -141,6 +141,7 @@
         - ttf-liberation
         - ttf-opensans
         - ttf-roboto
+        - ttf-iosevkaterm-nerd
   - name: base > Enable fonts presets
     ansible.builtin.file: state=link src="/usr/share/fontconfig/conf.avail/{{ item }}" path="/etc/fonts/conf.d/{{ item }}"
     with_items:
