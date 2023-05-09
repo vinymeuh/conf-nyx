@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+/usr/bin/keepassxc $*
+/home/viny/conf-nyx/bin/keecopy start

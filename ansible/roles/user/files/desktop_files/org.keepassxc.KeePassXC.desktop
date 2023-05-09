@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=KeePassXC
+GenericName=Password Manager
+Comment=Community-driven port of the Windows application “KeePass Password Safe”
+Exec=/home/viny/conf-nyx/bin/keepassxc %f
+Icon=keepassxc
+Terminal=false
+Type=Application
+Version=1.0
+Categories=Utility;Security;Qt;
