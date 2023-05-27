@@ -17,6 +17,14 @@
       - quodlibet
       - vlc
 
+- name: userapps > Install THE text editor, but I don't known which one it is yet :)
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - helix
+      - neovim
+      - xsel
+
 - name: userapps > Install photo management softwares
   community.general.pacman: name={{ packages | join(',') }}
   vars:
