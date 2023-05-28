@@ -35,14 +35,17 @@ alias ls='ls --color=auto'
 alias mv='mv -i'
 alias open='xdg-open'
 alias rm='rm -i'
-alias vi=nvim
 
 alias confstatus='cd ~/conf-nyx && git status'
 alias confdiff='cd ~/conf-nyx && git diff'
 
 alias code='~/Applications/VSCode-linux-x64/bin/code --disable-gpu'
+alias hx='helix'
 alias list-photo-tags='exiftool -G:1 -DateTimeOriginal -Artist -Copyright -xmp:all -iptc:all'
 alias radiogaga='ncmpcpp -h radiogaga.home'
+alias vi='nvim'
+
+alias cdw='cd ~/Work4Me'
 
 # zsh-autosuggestions plugin
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
