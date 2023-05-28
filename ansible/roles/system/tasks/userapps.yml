@@ -29,6 +29,7 @@
   community.general.pacman: name={{ packages | join(',') }}
   vars:
     packages:
+      - darktable
       - exiv2
       - imagemagick
       - perl-image-exiftool

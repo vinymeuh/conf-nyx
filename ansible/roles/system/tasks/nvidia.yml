@@ -6,6 +6,7 @@
       - nvidia-utils
       - nvidia-settings
       - nvtop
+      - opencl-nvidia
 
 - name: nvidia > Install Video Decode and Presentation API for UNIX (VDPAU) packages
   community.general.pacman: name={{ packages | join(',') }}
