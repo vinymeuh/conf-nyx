@@ -48,7 +48,6 @@ makepkg -si
 
 AUR packages installed:
 
-* https://aur.archlinux.org/art-rawconverter.git
 * https://aur.archlinux.org/onlyoffice-bin.git
 
 ## Notes & tips
