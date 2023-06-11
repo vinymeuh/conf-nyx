@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+help_msg() {
+    cat << EOF
+Usage: 
+    $(basename $0) show FILE...
+    $(basename $0) show-all FILE...
+    $(basename $0) copy-jpeg2xmp    # First copy .XMP files in same directory that JPEGs
+EOF
+}
+
+## Main ##
+case $1 in
+show)
+    shift
+    exiftool -d '%Y' -FileName -XMP:Subject -p '$FileName: $XMP:Subject' $*
+    ;;
+show-all)
+    shift
+    exiftool -G:1 -DateTimeOriginal -Artist -Copyright -xmp:all -iptc:all $*
+    ;;
+copy-jpeg2xmp)
+    # scan all .xmp files => %f = file.NEF, tags from "%f minus last 4 characters.jpg" => %file.jpg
+    exiftool -tagsFromfile %-.4f.jpg -XMP:Subject -ext .xmp  .
+    ;;
+*) help_msg && exit 1;;
+esac
