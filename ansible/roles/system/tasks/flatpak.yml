@@ -7,3 +7,4 @@
     flatpaks:
       - com.valvesoftware.Steam
       - com.valvesoftware.Steam.CompatibilityTool.Proton
+      - io.kopia.KopiaUI
