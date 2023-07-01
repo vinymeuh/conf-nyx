@@ -53,6 +53,13 @@
 - name: userapps > KiCad
   community.general.pacman: name=kicad,kicad-library
 
+- name: userapps > QMK firmware dependencies
+  community.general.pacman: name={{ packages | join(',') }}
+  vars:
+    packages:
+      - arm-none-eabi-gcc,arm-none-eabi-newlib
+      - dfu-programmer,dfu-util
+
 - name: userapps > Install Saleae Logic 2 dependencies
   community.general.pacman: name=libxcrypt-compat
 
