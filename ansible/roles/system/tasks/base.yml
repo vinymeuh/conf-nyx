@@ -25,6 +25,7 @@
       - python,python-psutil,python-wheel
       - rsync
       - screen
+      - smartmontools
       - smbclient
       - tree
       - unrar,unzip,xz
