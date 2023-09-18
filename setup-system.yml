@@ -4,6 +4,11 @@
   become_user: root
   become_method: sudo
 
+  vars:
+    kernel:
+      default: arch-lts
+      rootuuid: 78da4ebd-5eba-4a7c-8caf-5f297eece0a7
+
   tasks:
     - {import_role: name=system tasks_from=kernel, tags: ['kernel']}
     - {import_role: name=system tasks_from=base, tags: ['base']}
