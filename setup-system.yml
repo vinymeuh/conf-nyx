@@ -8,6 +8,9 @@
     kernel:
       default: arch-lts
       rootuuid: 78da4ebd-5eba-4a7c-8caf-5f297eece0a7
+      ucode: amd-ucode
+    base:
+      x11keymap: localectl set-x11-keymap us,fr pc105 altgr-intl,azerty
 
   tasks:
     - {import_role: name=system tasks_from=kernel, tags: ['kernel']}

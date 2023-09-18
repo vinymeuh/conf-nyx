@@ -1,21 +1,21 @@
-# - name: kernel > Install kernel & firmware packages
-#   community.general.pacman: name={{ item }}
-#   with_items:
-#     - linux,linux-headers
-#     - linux-lts,linux-lts-headers
-#     - linux-firmware
-#     - amd-ucode
+- name: kernel > Install kernel & firmware packages
+  community.general.pacman: name={{ item }}
+  with_items:
+    - linux,linux-headers
+    - linux-lts,linux-lts-headers
+    - linux-firmware
+    - amd-ucode
 
-# # systemd-boot is included with systemd
-# - block:
-#   - name: bootd > Check systemd-boot is installed
-#     ansible.builtin.command: /usr/bin/bootctl is-installed
-#     register: bootctl_is_installed
-#     changed_when: false
+# systemd-boot is included with systemd
+- block:
+  - name: bootd > Check systemd-boot is installed
+    ansible.builtin.command: /usr/bin/bootctl is-installed
+    register: bootctl_is_installed
+    changed_when: false
 
-#   - name: bootd > Install systemd-boot into the EFI system partition
-#     ansible.builtin.command: /usr/bin/bootctl install
-#     when: bootctl_is_installed.stdout != "yes"
+  - name: bootd > Install systemd-boot into the EFI system partition
+    ansible.builtin.command: /usr/bin/bootctl install
+    when: bootctl_is_installed.stdout != "yes"
   
   - name: bootd > Copy configuration files under /boot/loader
     ansible.builtin.template: src=bootd/{{ item }} dest=/boot/loader/{{ item }} mode=0755

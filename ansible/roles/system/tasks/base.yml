@@ -54,10 +54,8 @@
 
 # keyboard layouts
 - block:
-  - name: base > Set the system keyboard layout
-    ansible.builtin.shell: localectl set-keymap fr
   - name: base > Set the X11 keyboard layout
-    ansible.builtin.shell: localectl set-x11-keymap us,fr pc105 altgr-intl,azerty
+    ansible.builtin.shell: "{{ base.x11keymap }}"
 
 - name: base > Enable systemd timer paccache.timer
   ansible.builtin.systemd: name=paccache.timer enabled=yes state=started
