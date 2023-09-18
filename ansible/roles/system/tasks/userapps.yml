@@ -1,7 +1,7 @@
 - name: userapps > User viny
   ansible.builtin.user: name=viny group=viny shell=/bin/zsh groups=uucp,wheel append=yes
 
-- name: userapps > Install my base apps
+- name: userapps > Install base apps
   community.general.pacman: name={{ packages | join(',') }}
   vars:
     packages:
@@ -16,6 +16,12 @@
       - pdfarranger
       - quodlibet
       - vlc
+
+- name: userapps > Install base apps (flatpacks)
+  community.general.flatpak: name={{ flatpaks | join(',') }}
+  vars:
+    flatpaks:
+      - io.kopia.KopiaUI
 
 - name: userapps > Install THE text editor, but I don't known which one it is yet :)
   community.general.pacman: name={{ packages | join(',') }}
@@ -35,38 +41,24 @@
       - perl-image-exiftool
       - shotwell
 
-- name: userapps > Install dev tools
-  community.general.pacman: name={{ packages | join(',') }}
+- name: userapps > Install Steam
+  community.general.flatpak: name={{ flatpaks | join(',') }}
   vars:
-    packages:
-      - cmake
-      - dotnet-runtime,dotnet-sdk
-      - gdb
-      - gnome-builder
-      - heaptrack
-      - jre-openjdk
-      - lcov
-      - minicom
-      - perf
-      - python-pre-commit
+    flatpaks:
+      - com.valvesoftware.Steam
+      - com.valvesoftware.Steam.CompatibilityTool.Proton
 
-- name: userapps > KiCad
+- name: userapps > Install KiCad
   community.general.pacman: name=kicad,kicad-library
 
-- name: userapps > QMK firmware dependencies
-  community.general.pacman: name={{ packages | join(',') }}
-  vars:
-    packages:
-      - arm-none-eabi-gcc,arm-none-eabi-newlib
-      - dfu-programmer,dfu-util
+- name: userapps > Install C/C++ dev tools
+  community.general.pacman: name=heaptrack,lcov,perf
+
+- name: userapps > Install JRE OpenJDK
+  community.general.pacman: name=jre-openjdk
+
+- name: userapps > Install .NET and PowerShell
+  community.general.pacman: name=dotnet-runtime,dotnet-sdk  
 
 - name: userapps > Install Saleae Logic 2 dependencies
   community.general.pacman: name=libxcrypt-compat
-
-- name: userapps > Install custom udev rules
-  ansible.builtin.copy: src=udev/{{ item }} dest=/etc/udev/rules.d/{{ item }} mode=0644
-  with_items:
-    - esp32.rules
-    - raspberry.rules
-    - saleae.rules
-    - steam-controllers.rules

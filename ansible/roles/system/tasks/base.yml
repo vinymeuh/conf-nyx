@@ -4,15 +4,16 @@
     packages:
       - acpi
       - avahi,nss-mdns
-      - base-devel
+      - base-devel,cmake,gdb
       - bluez,bluez-utils
       - bridge-utils
+      - cpio
       - curl
       - dmidecode
       - exfat-utils
+      - flatpak
       - fzf
-      - git
-      - incron
+      - git,python-pre-commit
       - lm_sensors
       - lsof
       - lshw
@@ -24,21 +25,16 @@
       - pacman-contrib,pacutils,expac
       - python,python-psutil,python-wheel
       - rsync
-      - screen
+      - screen,minicom
       - smartmontools
       - smbclient
+      - sysfsutils
       - tree
       - unrar,unzip,xz
       - usbutils
-      - vi
+      - vim
       - wget
       - zsh,zsh-autosuggestions
-
-- name: base > Remove some defaults package
-  community.general.pacman: name={{ packages | join(',') }} state=absent
-  vars:
-    packages:
-      - vim,vim-runtime
 
 - name: base > Enable locale
   ansible.builtin.lineinfile:
@@ -56,37 +52,37 @@
   with_items:
     - 'LANG=fr_FR.UTF-8'
 
-- name: base > Set console keymap
-  ansible.builtin.lineinfile: dest=/etc/vconsole.conf line="KEYMAP=fr" create=yes
-
-- name: base > Ensure /etc/X11/xorg.conf.d exists
-  ansible.builtin.file: path=/etc/X11/xorg.conf.d state=directory
-
-- name: base > Set X keyboard
-  ansible.builtin.copy: src=00-keyboard.conf dest=/etc/X11/xorg.conf.d/00-keyboard.conf
+# keyboard layouts
+- block:
+  - name: base > Set the system keyboard layout
+    ansible.builtin.shell: localectl set-keymap fr
+  - name: base > Set the X11 keyboard layout
+    ansible.builtin.shell: localectl set-x11-keymap us,fr pc105 altgr-intl,azerty
 
 - name: base > Enable systemd timer paccache.timer
   ansible.builtin.systemd: name=paccache.timer enabled=yes state=started
 
-- name: base > Enable incrond service
-  ansible.builtin.systemd: name=incrond enabled=yes state=started
+- name: base > Install custom udev rules
+  ansible.builtin.copy: src=udev/{{ item }} dest=/etc/udev/rules.d/{{ item }} mode=0644
+  with_items:
+    - esp32.rules
+    - raspberry.rules
+    - saleae.rules
+    - steam-controllers.rules
 
-# aur_builder setup
-- name: base > Create aur_builder user
-  user: name=aur_builder system=yes
-
-- name: base > Allow passwordless sudo pacman for aur_builder
-  lineinfile:
-    path: /etc/sudoers.d/aur_builder-allow-to-sudo-pacman
-    state: present
-    line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
-    validate: /usr/sbin/visudo -cf %s
-    create: yes
-
-- name: base > Copy .bash_profile for aur_builder
-  ansible.builtin.copy: src=aur_builder/bash_profile dest=~/.bash_profile mode=0400
-  become: yes
-  become_user: aur_builder
+# aur_builder
+- block:
+  - name: base > Create aur_builder user
+    user: name=aur_builder system=yes
+  - name: base > Allow passwordless sudo pacman for aur_builder
+    lineinfile:
+      path: /etc/sudoers.d/aur_builder-allow-to-sudo-pacman
+      state: present
+      line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+      validate: /usr/sbin/visudo -cf %s
+      create: yes
+  - name: base > Copy .bash_profile for aur_builder
+    ansible.builtin.copy: src=aur_builder/bash_profile dest=~/.bash_profile mode=0400 owner=aur_builder group=aur_builder
 
 # network
 - block:
@@ -100,11 +96,11 @@
     ansible.builtin.systemd: name=avahi-daemon enabled=yes state=started
 
 # firewall
-- name: firewall > Install Firewalld
-  community.general.pacman: name=firewalld
-
-- name: firewall > Enable & Start Firewalld service
-  ansible.builtin.systemd: name=firewalld enabled=yes state=started
+- block:
+  - name: firewall > Install Firewalld
+    community.general.pacman: name=firewalld
+  - name: firewall > Enable & Start Firewalld service
+    ansible.builtin.systemd: name=firewalld enabled=yes state=started
 
 # audio
 - name: base > Install Pipewire
