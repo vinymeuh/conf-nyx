@@ -22,6 +22,7 @@
   vars:
     flatpaks:
       - io.kopia.KopiaUI
+      - org.freac.freac
 
 - name: userapps > Install THE text editor, but I don't known which one it is yet :)
   community.general.pacman: name={{ packages | join(',') }}
