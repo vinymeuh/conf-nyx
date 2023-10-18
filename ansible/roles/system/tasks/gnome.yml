@@ -17,12 +17,12 @@
       - gnome-control-center
       - gnome-disk-utility
       - gnome-font-viewer
-      - gnome-shell,gnome-shell-extensions
       - gnome-keyring
       - gnome-menus
       - gnome-screenshot
       - gnome-session
       - gnome-settings-daemon
+      - gnome-shell,gnome-shell-extensions
       - gnome-software
       - gnome-system-monitor
       - gnome-text-editor
@@ -31,11 +31,14 @@
       - gnome-video-effects
       - gnome-weather
       - gvfs,gvfs-afc,gvfs-goa,gvfs-google,gvfs-gphoto2,gvfs-mtp,gvfs-nfs,gvfs-smb
-      - nautilus,sushi
+      - loupe
       - mutter
+      - nautilus
       - seahorse
+      - sushi
+      - tecla
       - tracker3,tracker3-miners
-      - xdg-user-dirs-gtk,xdg-desktop-portal-gnome
+      - xdg-desktop-portal-gnome,xdg-user-dirs-gtk
 
 # https://archlinux.org/groups/x86_64/gnome-extra/
 - name: gnome > Install my selection from 'gnome-extra' group
