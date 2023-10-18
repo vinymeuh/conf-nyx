@@ -1,9 +1,3 @@
-- name: keecopy > Check incrontab
-  ansible.builtin.shell: incrontab -l | grep -c conf-nyx/bin/keecopy
-  register: incrontab_keecopy
-  failed_when: false
-  changed_when: false
-
 - name: keecopy > Install keecopy
   ansible.builtin.command: "bin/keecopy install"
   when: incrontab_keecopy.stdout == '0'
