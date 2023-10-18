@@ -33,7 +33,7 @@
     - { key: "/org/gnome/desktop/interface/gtk-theme", value: "'Adwaita-dark'" }
     - { key: "/org/gnome/desktop/interface/document-font-name", value: "'Cantarell 10'" }
     - { key: "/org/gnome/desktop/interface/font-name", value: "'Cantarell 10'" }
-    - { key: "/org/gnome/desktop/interface/monospace-font-name", value: "'Source Code Pro 10'" }
+    - { key: "/org/gnome/desktop/interface/monospace-font-name", value: "'IosevkaTerm Nerd Font Propo Medium 12'" }
 
 ## Gnome Apps Folders ## 
 - name: gnome > Define Apps Folders

@@ -51,6 +51,9 @@ folder_qt_apps:
 folder_shogi_apps:
   - com.github.vinymeuh.BitboardCalculator.desktop
   - qshogi.desktop
+  - SBrowserQ.desktop
+  - shogivar.desktop
+  - Shogidokoro.desktop
 
 folder_steam_apps:
   - steam.desktop
@@ -71,3 +74,4 @@ folder_system_apps:
   - org.gnome.seahorse.Application.desktop
   - org.gnome.Usage.desktop
   - timeshift-gtk.desktop
+  - io.kopia.KopiaUI.desktop
