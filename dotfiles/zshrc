@@ -41,7 +41,7 @@ alias confdiff='cd ~/conf-nyx && git diff'
 alias code='~/Applications/VSCode-linux-x64/bin/code --disable-gpu'
 alias hx='helix'
 alias radiogaga='ncmpcpp -h radiogaga.home'
-alias vi='nvim'
+alias vi='vim'
 
 alias cdw='cd ~/Work4Me'
 
