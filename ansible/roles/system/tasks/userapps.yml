@@ -5,6 +5,7 @@
   community.general.pacman: name={{ packages | join(',') }}
   vars:
     packages:
+      - chezmoi
       - chromium
       - firefox
       - thunderbird,thunderbird-i18n-fr 
@@ -24,13 +25,13 @@
       - io.kopia.KopiaUI
       - org.freac.freac
 
-- name: userapps > Install Helix 
+- name: userapps > Install apps for my Shell IDE 
   community.general.pacman: name={{ packages | join(',') }}
   vars:
     packages:
       - helix
-      - xsel
       - wezterm
+      - xsel
 
 - name: userapps > Install photo management softwares
   community.general.pacman: name={{ packages | join(',') }}
