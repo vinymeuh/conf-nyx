@@ -60,7 +60,10 @@
   community.general.pacman: name=jre-openjdk
 
 - name: userapps > Install .NET and PowerShell
-  community.general.pacman: name=dotnet-runtime,dotnet-sdk  
+  community.general.pacman: name=dotnet-runtime,dotnet-sdk,mono
+
+- name: userapps > Install OCaml
+  community.general.pacman: name=ocaml
 
 - name: userapps > Install Saleae Logic 2 dependencies
   community.general.pacman: name=libxcrypt-compat
