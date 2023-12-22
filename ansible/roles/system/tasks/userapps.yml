@@ -25,11 +25,14 @@
       - io.kopia.KopiaUI
       - org.freac.freac
 
-- name: userapps > Install apps for my Shell IDE 
+- name: userapps > Install apps for my PDE 
   community.general.pacman: name={{ packages | join(',') }}
   vars:
     packages:
       - helix
+      - neovim
+      - nnn
+      - ripgrep
       - wezterm
       - xsel
 
@@ -63,7 +66,7 @@
   community.general.pacman: name=dotnet-runtime,dotnet-sdk,mono
 
 - name: userapps > Install OCaml
-  community.general.pacman: name=ocaml
+  community.general.pacman: name=ocaml,opam
 
 - name: userapps > Install Saleae Logic 2 dependencies
   community.general.pacman: name=libxcrypt-compat
