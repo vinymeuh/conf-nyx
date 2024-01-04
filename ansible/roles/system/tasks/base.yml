@@ -32,7 +32,7 @@
       - tree
       - unrar,unzip,xz
       - usbutils
-      - vim
+      - vi
       - wget
       - zsh,zsh-autosuggestions
 
