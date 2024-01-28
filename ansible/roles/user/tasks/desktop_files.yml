@@ -17,3 +17,4 @@
 - name: desktop-files > Copy custom desktop files
   ansible.builtin.copy: src={{ item }} dest=~/.local/share/applications mode=0400
   with_fileglob: 'desktop_files/*.desktop'
+  notify: update-desktop-database

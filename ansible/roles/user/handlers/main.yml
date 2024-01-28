@@ -1,0 +1,2 @@
+- name: update-desktop-database
+  command: update-desktop-database ~/.local/share/applications

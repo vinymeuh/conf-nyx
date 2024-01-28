@@ -5,7 +5,6 @@
   tasks:
     - {import_role: name=user tasks_from=base, tags: ['base']}
     - {import_role: name=user tasks_from=desktop_files, tags: ['desktop']}
-    - {import_role: name=user tasks_from=dotfiles, tags: ['dotfiles']}
     - {import_role: name=user tasks_from=gnome, tags: ['gnome']}
     - {import_role: name=user tasks_from=nautilus, tags: ['gnome','nautilus']}
     - {import_role: name=user tasks_from=keecopy, tags: ['keecopy']}
